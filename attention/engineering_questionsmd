@@ -1,0 +1,31 @@
+Pruning in Unigram (SentencePiece) and rare token handlingYes, pruning could risk losing rare but relevant tokens, but the algorithm is designed to minimize this. Unigram starts with a large seed vocabulary (common substrings or oversized BPE) and uses an Expectation-Maximization (EM) process on a unigram language model. It iteratively removes tokens whose removal increases the overall corpus log-likelihood the least (i.e., least useful for explaining the data).
+
+github.com +1
+
+Rare tokens: They are kept if they appear in optimal segmentations (Viterbi paths) or contribute enough to likelihood. Low-frequency tokens with no good alternatives are often retained.
+Safeguards: Byte fallback (common in modern setups) encodes unseen/rare characters as <0xXX> byte tokens. Special "always keep" logic protects critical pieces (e.g., single characters, specials). Pruning is gradual (e.g., remove 10-20% at a time based on loss impact).
+Trade-off: It can yield better probabilistic tokenization than pure frequency-based BPE, but it's more computationally expensive to train. Recent tweaks (e.g., simpler final pruning) trade slight loss for better compression.
+
+arxiv.org
+
+In practice, rare but meaningful tokens (e.g., domain-specific terms) rarely disappear entirely thanks to these mechanisms and large enough seed vocabs.TikToken / Byte-level BPE (GPT-style) for rare tokensTikToken (and similar in newer GPT models like o200k_base) has no pruning risk for rare items. Everything falls back gracefully to the 256 raw byte tokens. Rare characters or novel strings are always representable as sequences of byte tokens—no [UNK], ever. Larger modern vocabs (100k–200k+) simply capture more common patterns upfront for efficiency, but byte fallback is the safety net.
+
+arxiv.org
+
+Newer models (GPT-4o/o-series, DeepSeek, etc.)Most stick to byte-level BPE (tiktoken-style or close variants) with large vocabs:GPT-4o / o200k_base: ~200k vocab, enhanced regex pre-tokenization (handles more punctuation/newlines). Rare tokens → bytes. Some "unreachable" or intermediate merge tokens exist but are minor.
+DeepSeek (V3+): Byte-level BPE with ~128k vocab, customized pre-tokenizer (better multilingual, punctuation+linebreak combos). Optimized for compression across languages.
+
+zenodo.org
+
+Hybrids: Not extremely common yet for core text tokenization, but research explores morphology-aware hybrids (rule-based roots/affixes + statistical fallback) or visual hybrids (semantic + pixel tokens). Some models distill or post-process for better morphology/multilingual handling. Pure byte-BPE + large vocab + byte fallback dominates for robustness.
+
+arxiv.org
+
+No major "loss" of rare tokens in practice—byte fallback ensures universality.SentencePiece: Training vs. Inference, speed, and consistencySentencePiece is self-contained: The .model file (protobuf) embeds everything—normalization rules, vocab, scores/probabilities (for Unigram), and segmentation logic. Training builds this model; inference loads it once and reuses it.Speed/Consistency: Pure C++ core (very fast, ~50k+ sentences/sec). No runtime re-training or dynamic changes. For batching, it supports multi-threading (num_threads). Python bindings can use bytes input for zero-copy speedups. Caching happens at the library level (e.g., trie/lattice structures for Viterbi in Unigram, reused across calls). The model is deterministic given the same input.
+
+github.com +1
+
+"Dual approach": Training is EM/pruning-heavy; inference is fast forward-pass (lattice + Viterbi for Unigram, or greedy merges for BPE mode). No cache of "values" per se beyond internal data structures—consistency comes from the fixed model file.
+
+Current timeline (2025–2026): Byte-level BPE (tiktoken-style) is the pragmatic default for new models (speed, universality, easy scaling). SentencePiece/Unigram remains strong for multilingual or when probabilistic segmentation helps. Larger vocabs + refined pre-tokenizers handle the "rare token" edge cases effectively. Your earlier BPE impl can evolve by adding byte fallback or Unigram-style pruning for experimentation.Let me know if you want code examples (e.g., SentencePiece training with byte_fallback) or deeper dives into any part!
+
