@@ -211,55 +211,56 @@ class SentencePieceTokenizer:
             'count': len(ids)
         }
 
-input_text = "I'm building chunkdUp in RUST"
+if __name__ == "__main__":
+    input_text = "I'm building chunkdUp in RUST"
 
-tok = RegexTokenizer()
+    tok = RegexTokenizer()
 
-print("--- My BPE ---")
-vocab_size = 256 + 10 # 10 merges
-tok.train(input_text, vocab_size, verbose=False)
+    print("--- My BPE ---")
+    vocab_size = 256 + 10 # 10 merges
+    tok.train(input_text, vocab_size, verbose=False)
 
-my_bpe_ids = tok.encode(input_text)
-my_bpe_pieces = [tok.decode([idx]) for idx in my_bpe_ids]
-my_bpe_count = len(my_bpe_ids)
+    my_bpe_ids = tok.encode(input_text)
+    my_bpe_pieces = [tok.decode([idx]) for idx in my_bpe_ids]
+    my_bpe_count = len(my_bpe_ids)
 
-print(f"Token IDs: {my_bpe_ids}")
-print(f"Token Pieces: {my_bpe_pieces}")
-print(f"Token count: {my_bpe_count}")
+    print(f"Token IDs: {my_bpe_ids}")
+    print(f"Token Pieces: {my_bpe_pieces}")
+    print(f"Token count: {my_bpe_count}")
 
-# Process with Tiktoken
-print("\n--- Tiktoken (cl100k_base) ---")
-tik_tok = TiktokenTokenizer()
-tik_res = tik_tok.process(input_text)
-print(f"Token IDs: {tik_res['ids']}")
-print(f"Token Pieces: {tik_res['pieces']}")
-print(f"Token count: {tik_res['count']}")
+    # Process with Tiktoken
+    print("\n--- Tiktoken (cl100k_base) ---")
+    tik_tok = TiktokenTokenizer()
+    tik_res = tik_tok.process(input_text)
+    print(f"Token IDs: {tik_res['ids']}")
+    print(f"Token Pieces: {tik_res['pieces']}")
+    print(f"Token count: {tik_res['count']}")
 
-# Process with SentencePiece
-print("\n--- SentencePiece ---")
-spm_tok = SentencePieceTokenizer()
-spm_tok.train(input_text)
-spm_res = spm_tok.process(input_text)
-print(f"Token IDs: {spm_res['ids']}")
-print(f"Token Pieces: {[p.encode('ascii', 'replace').decode('ascii') for p in spm_res['pieces']]}")
-print(f"Token count: {spm_res['count']}")
+    # Process with SentencePiece
+    print("\n--- SentencePiece ---")
+    spm_tok = SentencePieceTokenizer()
+    spm_tok.train(input_text)
+    spm_res = spm_tok.process(input_text)
+    print(f"Token IDs: {spm_res['ids']}")
+    print(f"Token Pieces: {[p.encode('ascii', 'replace').decode('ascii') for p in spm_res['pieces']]}")
+    print(f"Token count: {spm_res['count']}")
 
-final_results = {
-    "input_text": input_text,
-    "my_bpe": {
-        "ids": my_bpe_ids,
-        "pieces": my_bpe_pieces,
-        "count": my_bpe_count
-    },
-    "tiktoken": tik_res,
-    "sentencepiece": spm_res
-}
+    final_results = {
+        "input_text": input_text,
+        "my_bpe": {
+            "ids": my_bpe_ids,
+            "pieces": my_bpe_pieces,
+            "count": my_bpe_count
+        },
+        "tiktoken": tik_res,
+        "sentencepiece": spm_res
+    }
 
-# Write results to the requested path
-output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "results", "lab-001-tokenizer"))
-os.makedirs(output_dir, exist_ok=True)
-output_file = os.path.join(output_dir, "experiment-001.json")
+    # Write results to the requested path
+    output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "results", "lab-001-tokenizer"))
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, "experiment-001.json")
 
-with open(output_file, "w", encoding="utf-8") as f:
-    json.dump(final_results, f, indent=4)
-print(f"\nResults stored in {output_file}")
+    with open(output_file, "w", encoding="utf-8") as f:
+        json.dump(final_results, f, indent=4)
+    print(f"\nResults stored in {output_file}")

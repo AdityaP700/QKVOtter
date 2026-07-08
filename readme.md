@@ -1,6 +1,6 @@
-# QKVOTter
+# QKV-Otter
 
-(Yes, I named it QKVOTter purely because it sounded cute in my head and I am dealing with the architecture behind the transformer model)
+(the name of the project sounds cute though)
 
 I'm building this from scratch because I actually want to understand how a Transformer works, rather than just pretending I do by throwing JSON at an OpenAI endpoint.
 
@@ -19,8 +19,34 @@ I don't want to just `pip install transformers` and let HuggingFace sweep these 
 Here is what I've figured out so far while banging my head against the keyboard:
 
 **Lab 001: The Tokenizer Problem**
-How do tokenizer design choices influence what ultimately reaches the transformer? (Spoiler: A bad tokenizer explodes the token count, which geometrically destroys the attention compute budget. I compared a custom, naïve BPE against Tiktoken and SentencePiece to see how the sausage is actually made).
-- **Learnings**: [001_tokenizer_behaviour.md](./learnings/lab-001/001_tokenizer_behaviour.md)
--  **Results**: [experiment-001.json](./results/lab-001-tokenizer/experiment-001.json)
+How do tokenizer design choices influence what ultimately reaches the transformer? (I compared a custom, naïve BPE against Tiktoken and SentencePiece to see how the sausage is actually made).
+
+- **Experiment 1: Basic Tokenizer Behavior**
+  *How do different tokenization algorithms compress the exact same sentence, and what does that mean for the transformer's attention cost?*
+  - **Learnings**: [001_tokenizer_behaviour.md](./learnings/lab-001/001_tokenizer_behaviour.md)
+  - **Results**: [experiment-001.json](./results/lab-001-tokenizer/experiment-001.json)
+
+- **Experiment 2: Breaking the Tokenizer (Edge Cases)**
+  *I wanted to intentionally break the tokenizers by throwing C++ code, SQL queries, Emojis, and non-Latin scripts (Hindi and Japanese) at them to see where they shatter into raw bytes.*
+  - **Learnings**: [001_break_tokenizer.md](./learnings/lab-001/001_break_tokenizer.md)
+  - **Results**: [experiment-002.json](./results/lab-001-tokenizer/experiment-002.json)
+
+### Key Observation from Lab 001
+
+Instead of simply concluding "tiktoken is better,":
+
+> **Different tokenizers exhibit strengths that largely reflect the corpus on which their vocabularies were learned.**
+
+Examples from this experiment:
+1. **tiktoken** compressed source code extremely well.
+2. A **toy BPE** struggled with multilingual text because it had never observed those byte patterns frequently.
+3. The **SentencePiece** model used in this experiment fragmented code heavily, illustrating that tokenizer quality depends more on the learned vocabulary than on the underlying algorithm itself.
+
+Hence,
+- Algorithm $\neq$ Tokenizer quality.
+- Vocabulary matters more.
+
+so now the next question is that
+"How does tokenizer design affect the transformer that comes afterward?"
 
 *More labs coming as I slowly rebuild the transformer architecture block by block...*

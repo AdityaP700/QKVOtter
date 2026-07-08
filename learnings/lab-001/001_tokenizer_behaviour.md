@@ -86,4 +86,3 @@ Let's quantify it. Suppose attention complexity is $O(n^2)$.
 
 
 So, for exactly the same sentence, GPT performs roughly `81` instead of `324` pairwise attention computations. That's a **4× reduction**. Of course, this is a tiny example, but it illustrates the direction and massive downstream impact of tokenization on compute costs.
-
