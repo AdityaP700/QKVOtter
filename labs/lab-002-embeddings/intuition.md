@@ -25,3 +25,7 @@ Token IDs
 Embedding Lookup
 ↓
 Vectors
+
+youhuhu : used the list compression
+- token_id=[vocab[word] for word in words]
+
