@@ -49,4 +49,13 @@ Hence,
 so now the next question is that
 "How does tokenizer design affect the transformer that comes afterward?"
 
+**Lab 002: Embeddings**
+The embedding layer performs no computation beyond a lookup. Each token ID acts as an index into a trainable embedding matrix, and the corresponding row is returned as that token's vector representation.
+
+- **Experiment 1: Embedding Lookup**
+  *Given token IDs produced by a tokenizer, how does the embedding layer convert them into vectors?*
+  - **Learnings**: [overall_idea.md](./learnings/lab_002_embeddings/overall_idea.md)
+  - **Results ("I love dogs")**: [experiment_001.json](./results/lab_002_embeddings/experiment_001.json)
+  - **Results ("I love AI")**: [experiment_002.json](./results/lab_002_embeddings/experiment_001_b.json)
+
 *More labs coming as I slowly rebuild the transformer architecture block by block...*
