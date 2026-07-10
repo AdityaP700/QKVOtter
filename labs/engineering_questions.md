@@ -1,23 +1,162 @@
-How do tokenizer design choices influence what ultimately reaches the transformer?
-We care about
 
-Tokenizer
-↓
-engineering_questionsmdToken Count
-↓
-Attention Cost
-↓
-Context Usage
-↓
-Inference
+- i have observed that for different input tokens how the tokenizer behaves.
 
-so for the experiement 1
-our main goal is to run the input text through
--my BPE
-- tiktoken
-- sentencepiece
+- surprisingly the results are different
 
-Record :
-- token IDs
-- token Pieces
-- token count
+as of now i am curious enough to know
+how one token attends to other tokens
+
+the simple trick is the embeddings
+but what is embeddings??
+
+
+anything magical? no right
+at the end all these things are mathematical things
+
+hence what is embeddings
+
+these are just matrices
+
+about how one token id is being
+transformed into something showing its relevance as in the form of a vector
+
+and these vectors are used to identify
+
+which token id might be attending to any other tokens
+
+hence whats the pipeline to be created ?
+
+- first of all ,build an embedding matrix
+
+but from  Where do these values come from?
+
+- embeddings are literally learned parameters.
+
+More token splitting
+
+↓
+
+Longer sequences
+
+↓
+
+More attention cost
+
+Large vocabulary
+
+250000
+
+↓
+
+Shorter sequences
+
+↓
+
+Huge embedding matrix
+
+↓
+
+Huge output layer
+
+↓
+
+More memory
+
+
+well backpropagation
+doesnt says
+- change embeddings
+
+it says to find every parameter that contributed to this loss.
+
+∂Weight
+∂Loss
+	​
+
+
+Read it as
+
+"If this weight changes a tiny bit,
+how much does the loss change?"
+
+
+"Where are these gradients calculated from?"
+
+From the loss.
+
+Prediction
+
+↓
+
+Loss
+
+↓
+
+Backpropagation
+
+↓
+
+Gradients
+
+↓
+
+Parameter updates
+
+
+think of backpropagation
+
+Token IDs
+
+↓
+
+Embedding
+
+↓
+
+Attention
+
+↓
+
+Feed Forward
+
+↓
+
+Logits
+
+↓
+
+Softmax
+
+↓
+
+Loss
+
+During the forward pass, information flows downward.
+
+When training, we ask
+
+"Who caused this loss?"
+
+So the error flows backward:
+
+Loss
+
+↑
+
+Softmax
+
+↑
+
+Linear layer
+
+↑
+
+Attention
+
+↑
+
+Embedding
+
+That's why it's called back-propagation.
+
+Each layer receives a gradient from the layer after it, computes how much it contributed to the error, and passes gradients further backward using the chain rule from calculus.
