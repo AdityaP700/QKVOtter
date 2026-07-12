@@ -47,3 +47,11 @@ Input Embeddings:
  [ 1.42471595 -1.54728246  0.41698861 -0.89686133]
  [-1.02697171 -0.84015993  0.01685436 -1.05611755]]
 Shape: (3, 4)
+
+for the experiment 2 ,we are not training the code to be accurate results
+
+rather
+An embedding vector does not become meaningful by itself. It becomes meaningful because updating it reduces the prediction loss of a downstream task.
+
+How does an embedding stop being random?
+- If an embedding participates in a prediction task, gradient descent will gradually update its row to reduce prediction loss.
