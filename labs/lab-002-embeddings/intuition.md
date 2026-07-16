@@ -55,3 +55,57 @@ An embedding vector does not become meaningful by itself. It becomes meaningful 
 
 How does an embedding stop being random?
 - If an embedding participates in a prediction task, gradient descent will gradually update its row to reduce prediction loss.
+
+Tiny Dataset
+↓
+Tokenizer
+↓
+Embedding Lookup
+↓
+Combine Embeddings
+(your average/sum)
+↓
+Linear Layer
+↓
+Logits
+↓
+Cross Entropy Loss
+↓
+Backprop
+↓
+Update
+
+
+Epoch 0
+
+Embedding("AI")
+
+[....]
+
+Loss
+
+2.14
+
+Observe
+
+Embedding row changed.
+
+That's the entire experiment.
+
+
+our main goal is to look
+- how word2vec is taught
+
+
+For Experiment 2
+
+Average
+or
+Sum
+Pick average.
+
+Output
+
+- Sentence Vector
+- Shape
+- (embedding_dim,)

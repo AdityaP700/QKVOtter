@@ -1,11 +1,10 @@
 import numpy as np
 import json
 import os
+import argparse
 vocab_size = 5
-
 #i am taking the embedding dimension to be 4 as of now
 embedding_dim=4
-
 #Why does every token need one row?
 #cuz each token iD acts as the row index inside the
 #embedding matrix
@@ -20,9 +19,6 @@ embedding_matrix=np.random.randn(vocab_size,embedding_dim)
 #then i have to print in such that it produces an array
 #you have a key-value pair
 #you have to carry out the key and the value whenever prompted
-
-import argparse
-
 vocab = {
     "I":0,
     "love":1,
@@ -64,6 +60,7 @@ token_ids=[vocab[word]for word in words]
 # rows corresponding to the index number listed in token_ids
 #stack together to form a new matrix called input embeddings
 input_embeddings=embedding_matrix[token_ids]
+
 print("Token IDs:", token_ids)
 print("\nInput Embeddings:")
 print(input_embeddings)

@@ -37,3 +37,20 @@ high_values = embedding_matrix[mask]
 
 single_weight = embedding_matrix[0,2]
 
+
+
+----experimentation-2
+- the case is ,Token-to-ID Mapping (Word Embedding)Before feeding text into a neural network (like an LSTM or Transformer),
+
+- every word must be converted into a unique identification number. This dictionary acts as the master lookup index.
+
+# vocab_dict = {word.lower(): i for i, word in enumerate(vocab)}
+
+
+another is the np.random.seeed(42);
+# If you are trying to invent a new game, and your game crashes, you want to be able to replay the exact same moves to figure out why it broke. If the numbers change every time, you can never recreate the bug!
+
+it is used to reproduce exact same random outputs
+
+# .lower()
+- it is a built-in string method used to convert all uppercase letters in a text string into lowercase letters.
