@@ -109,3 +109,27 @@ Output
 - Sentence Vector
 - Shape
 - (embedding_dim,)
+
+here the shape of the linear layer is
+- for the embedding dimension 4 and the vocab size being 20 will be 4*20
+
+how do logits appear ?/
+ -> z = XW+b
+
+ the shape (4,) acts as the X
+
+ the Linear weight acts as W
+ - (4*20)
+
+
+![alt text](image.png)
+
+- the number with highest value of a embeded matrix are the ones the which will be choosen for the next layer
+
+high score = most probable logit
+
+# "Logits are the raw scores (unnormalized evidence) for every possible output token.
+# "Among all the words I know, AI currently has the strongest evidence of being the next token."
+
+# "How compatible is my sentence representation with every word in the vocabulary?"
+# The token with the highest logit is the model's current prediction, while Softmax converts these scores into probabilities for training and sampling.

@@ -20,7 +20,11 @@ vocab = [
     "India",
     "Japan",
     "Paris",
-    "London"
+    "London",
+    "what",
+    "?",
+    "is",
+    "japan?"
 ]
 
 training_data = [
@@ -50,7 +54,7 @@ training_data = [
     (["france", "is"], "country")
 ]
 
-input_sentence = "I love India"
+input_sentence = "what is Japan?"
 
 # Create a lowercase-to-index mapping
 # for robust lookup
@@ -90,3 +94,29 @@ print(f"\nInput Embeddings (Shape: {input_embeddings.shape}):")
 print(input_embeddings)
 print(f"\nAverage Embedding (Shape: {average_embedding.shape}):")
 print(average_embedding)
+
+# --- Linear Layer (Logits) ---
+# so right now we are simply initializing the
+# the weights, the weights are basically the
+# we have embedded dim ,then taking the vocab_size
+W = np.random.randn(embedding_dim, vocab_size)
+
+# the logits are calculated using the analogy
+# z=xw+b
+# X is the average embedding value ,
+# the value was (4*1) @(4*20) ->(20,1)
+# W shape: (4, 20)
+# (4,) @ (4, 20) -> (20,)
+logits = np.dot(average_embedding, W)
+
+print(f"\nLinear Weight W (Shape: {W.shape}):")
+print(f"[{W[0, :3]} ...]") # Just printing a snippet to avoid cluttering
+
+print(f"\nLogits (Shape: {logits.shape}):")
+print(logits)
+
+# The token with the highest logit is the model's current prediction
+predicted_token_id = np.argmax(logits)
+predicted_token = vocab[predicted_token_id]
+print(f"\nHighest Logit Token ID: {predicted_token_id}")
+print(f"Predicted Token: '{predicted_token}' (Logit: {logits[predicted_token_id]:.4f})")

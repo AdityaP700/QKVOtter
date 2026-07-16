@@ -54,3 +54,12 @@ it is used to reproduce exact same random outputs
 
 # .lower()
 - it is a built-in string method used to convert all uppercase letters in a text string into lowercase letters.
+
+# argmax() : gives the arguments of the max
+- instead of providing the value
+- it gives the index of that highest value
+- it is being used in every classification AI model
+- imagine an AI trying to guess if a photo is a cat, dog, or bird:
+- Without argmax, the AI would just spit out abstract percentages. argmax forces the AI to make a definitive decision.
+
+# np.dot() : it is being used to do the dot product 
