@@ -168,3 +168,26 @@ softmax(QK`/sqrt(d_k))V :
 - Layer Normalization: Standardizes the mathematical scale of the outputs to ensure fast, stable training.
 
 - Feed-Forward Networks (FFN): A set of standard dense linear layers applied to each position independently to apply non-linear transformations to the data.
+
+# why stable_logits = logits - np.max(logits)?
+- the reason is that ,logits are not always small
+- what if ,softmax wants exp(1244) : it will be humongous
+- it will end up being giving inf/undefined value i.e. NaN
+
+ # Softmax only cares about relative differences.
+
+
+# what is an Entropy ?
+- Cross-Entropy measures the average number of bits needed to identify an event if your coding scheme is based on a wrong distribution \(Q\) rather than the true distribution \(P\).
+
+# so what the hell is a cross entropy
+- Cross-Entropy calculates how far apart your model's guess is from the absolute truth. The worse your model's guess is, the higher the Cross-Entropy score will be.
+
+# Types of Entropies
+- Binary Cross-Entropy (BCE), When to use: For yes/no, binary classification problems (e.g., Spam vs. Not Spam, Tumorous vs. Benign).
+
+- Categorical Cross-Entropy (CCE),When to use: For multi-class classification where an item can only belong to one category (e.g., Cat vs. Dog vs. Bird).
+
+- Sparse Categorical Cross-Entropy,When to use: Mathematically identical to CCE, but computationally optimized.Requirement: Instead of converting labels to bulky one-hot encoded arrays, you leave your labels as integers (0, 1, 2). This saves a massive amount of RAM when you have thousands of classes (like predicting the next word in a dictionary for LLMs).
+
+- Relative Entropy (Kullback-Leibler / KL Divergence),When to use: Used in Generative AI (like VAEs or Diffusion models) to measure how much information is lost when approximating one continuous distribution with another.

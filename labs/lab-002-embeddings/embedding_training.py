@@ -1,30 +1,10 @@
 import numpy as np
 
 vocab = [
-    "I",
-    "you",
-    "love",
-    "like",
-    "hate",
-    "AI",
-    "ML",
-    "Python",
-    "Rust",
-    "C++",
-    "cats",
-    "dogs",
-    "birds",
-    "apple",
-    "banana",
-    "orange",
-    "India",
-    "Japan",
-    "Paris",
-    "London",
-    "what",
-    "?",
-    "is",
-    "japan?"
+    "I", "you", "love", "like", "hate", "AI", "ML", "Python", "Rust", "C++",
+    "cats", "dogs", "birds", "apple", "banana", "orange", "India", "Japan",
+    "Paris", "London", "what", "?", "is", "japan?",
+    "country", "fruit", "programming", "city", "milk", "bones", "seeds"
 ]
 
 training_data = [
@@ -118,8 +98,8 @@ print(logits)
 # The token with the highest logit is the model's current prediction
 predicted_token_id = np.argmax(logits)
 predicted_token = vocab[predicted_token_id]
-print(f"\nHighest Logit Token ID: {predicted_token_id}")
-print(f"Predicted Token: '{predicted_token}' (Logit: {logits[predicted_token_id]:.4f})")
+# print(f"\nHighest Logit Token ID: {predicted_token_id}")
+# print(f"Predicted Token: '{predicted_token}' (Logit: {logits[predicted_token_id]:.4f})")
 
 
 #implementing the softmax function to compute the
@@ -137,3 +117,40 @@ probabilities = exp_logits/np.sum(exp_logits)
 
 print("Probabilities: ",probabilities)
 print("Sum",np.sum(probabilities))
+
+
+# define a true target
+true_target = "country"
+
+#get the index of the true target word from the vocab
+target_tokenId= vocab_dict[true_target.lower()]
+
+#we are using the CCE
+# reason is to prevent computer doing bad maths
+# One-Hot encoding treats every single word as completely
+#  independent and equally far apart from every
+#  other word in geometric space
+
+# another reason : To match the shape of
+#  probabilities for the Loss Formula
+
+# i.e. The cross-entropy formula performs an element-by-element
+# multiplication between the absolute truth (\(P\))
+# and  model's predictions
+
+#exactly one element is "hot" (set to 1.0)
+#and all other elements are "cold" (set to 0.0).
+
+p_true=np.zeros(vocab_size)
+p_true[target_tokenId]=1.0
+
+#predicted probabilities
+q_pred=probabilities
+
+epsilon = 1e-15
+q_pred_clipped = np.clip(q_pred, epsilon, 1.0)
+cross_entropy_loss = -np.sum(p_true*np.log(q_pred_clipped))
+print("\n--- Cross-Entropy Loss Calculation ---")
+print(f"True Target Word: '{true_target}' (Token ID: {target_tokenId})")
+print(f"Model's Assigned Probability to '{true_target}': {q_pred[target_tokenId]:.6f}")
+print(f"Calculated Cross-Entropy Loss: {cross_entropy_loss:.6f}")
