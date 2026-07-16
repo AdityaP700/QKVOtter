@@ -160,3 +160,26 @@ Embedding
 That's why it's called back-propagation.
 
 Each layer receives a gradient from the layer after it, computes how much it contributed to the error, and passes gradients further backward using the chain rule from calculus.
+
+for our experiment we will be adding the embeddings inorder to get a simplified results
+
+we are not comparing vectors
+we are comparing predictions
+These are logits
+not to compare vectors
+
+Input Tokens
+↓
+Embedding Layer
+↓
+Transformer
+↓
+Vocabulary Scores
+↓
+Loss
+
+The embedding layer is just another trainable layer.
+
+vocab_size =5
+st_vec=4
+
