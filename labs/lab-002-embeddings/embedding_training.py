@@ -120,3 +120,20 @@ predicted_token_id = np.argmax(logits)
 predicted_token = vocab[predicted_token_id]
 print(f"\nHighest Logit Token ID: {predicted_token_id}")
 print(f"Predicted Token: '{predicted_token}' (Logit: {logits[predicted_token_id]:.4f})")
+
+
+#implementing the softmax function to compute the
+# probability distribution
+
+# we subtract the maximum value (np.max) from the logits before exponentiation.
+#  This is a crucial engineering trick called numerical stability—
+# it prevents your computer from crashing due
+# to memory overflow if your logits are
+# very large numbers.
+stable_logits = logits-np.max(logits)
+exp_logits = np.exp(stable_logits)
+
+probabilities = exp_logits/np.sum(exp_logits)
+
+print("Probabilities: ",probabilities)
+print("Sum",np.sum(probabilities))

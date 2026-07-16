@@ -129,7 +129,42 @@ how do logits appear ?/
 high score = most probable logit
 
 # "Logits are the raw scores (unnormalized evidence) for every possible output token.
-# "Among all the words I know, AI currently has the strongest evidence of being the next token."
+- "Among all the words I know, AI currently has the strongest evidence of being the next token."
 
 # "How compatible is my sentence representation with every word in the vocabulary?"
-# The token with the highest logit is the model's current prediction, while Softmax converts these scores into probabilities for training and sampling.
+- The token with the highest logit is the model's current prediction, while Softmax converts these scores into probabilities for training and sampling.
+
+# Attention exists because averaging destroys relationships between tokens.
+
+# Attention is a component (a mathematical layer), while the Transformer is the complete system (the deep learning architecture).
+
+- Attention is a mathematical matrix which helps in finding relationship between words
+
+- its components are dot products ,softmax,scaling
+- used in RNNs/LSTMs
+
+#  it computes through Q,K,V
+softmax(QK`/sqrt(d_k))V :
+- \(QK^{T}\) (Dot Product): Measures the geometric similarity/relevance between every word and every other word.
+
+-  (Scaling Factor): Prevents the gradients from vanishing during training.
+
+- Softmax: Converts the raw similarity scores into a probability distribution (weights that sum to 1).
+
+- Multiplying by \(V\): Scales the original word meanings by those calculated attention weights.
+
+# Transformer is like a sports car
+- its a full neural network architecture
+- it processes ,transforms ,and predicts data
+- its components are attention ,FFNs,LayerNorm,Embedding
+
+# a standard transformer block consists of
+- positional encodings : injects order and time formation into the input embeddings
+
+- Multi-Head Attention (MHA): Runs multiple attention operations in parallel, allowing the model to focus on different aspects of a sentence at the same time
+
+- Residual Connections (Skip Connections): Adds the original input back to the attention output to prevent signal degradation across deep layers.
+
+- Layer Normalization: Standardizes the mathematical scale of the outputs to ensure fast, stable training.
+
+- Feed-Forward Networks (FFN): A set of standard dense linear layers applied to each position independently to apply non-linear transformations to the data.
