@@ -1,4 +1,6 @@
 import numpy as np
+import json
+import os
 
 class Vocabulary:
     """Handles vocabulary creation, token-to-index mapping, and lookup operations."""
@@ -593,6 +595,7 @@ if __name__ == "__main__":
           f"{results['probabilities'][target_token_id]:.6f}")
     print(f"Calculated Cross-Entropy Loss: {loss:.6f}")
 
+
     # ============================================================================
     # TRAINING DEMONSTRATION
     # ============================================================================
@@ -603,25 +606,64 @@ if __name__ == "__main__":
     trainer = Trainer(pipeline, optimizer)
 
     # Test on a single example
-    input_tokens = ["what", "is"]
-    target_token = "japan?"
-    target_id = pipeline.vocabulary.get_token_id(target_token)
+    input_tokens = ["what", "is", "japan?"]
+    target_token = "country"
+    target_tokenId = pipeline.vocabulary.get_token_id(target_token)
 
     print("\n=== BEFORE TRAINING ===")
     result_before = pipeline.process_sentence("what is Japan?")
     print(f"Predicted: '{result_before['predicted_token']}'")
-    print(f"Probabilities for '{target_token}': {result_before['probabilities'][target_id]:.6f}")
+    print(f"Probabilities for '{target_token}': {result_before['probabilities'][target_tokenId]:.6f}")
 
-    print("\n=== TRAINING 100 STEPS ===")
-    for step in range(100):
+    training_history = {
+        "forward_pass_initial": {
+            "predicted_token": result_before["predicted_token"],
+            "target_probability": float(result_before['probabilities'][target_tokenId])
+        },
+        "epochs": []
+    }
+
+    print("\n=== TRAINING 1000 STEPS ===")
+    for step in range(1001):
         loss, predicted = trainer.train_step(input_tokens, target_token)
-        if step % 20 == 0:
+
+        # Save every step to history or just every 10 steps to save space. Let's save every 10 steps.
+        if step % 10 == 0:
             result = pipeline.process_sentence("what is Japan?")
-            prob = result['probabilities'][target_id]
-            print(f"Step {step:2d}: Loss={loss:.4f}, P({target_token})={prob:.4f}, Predicted='{predicted}'")
+            prob = result['probabilities'][target_tokenId]
+            training_history["epochs"].append({
+                "step": step,
+                "loss": float(loss),
+                "target": vocab[target_tokenId],
+                "prediction": result['predicted_token'],
+                "p_target": float(prob)
+            })
+
+        if step % 100 == 0:
+            result = pipeline.process_sentence("what is Japan?")
+            probabilities = result['probabilities']
+            print(f"--- Step {step} ---")
+            print("Target      :", vocab[target_tokenId])
+            print("Prediction  :", vocab[np.argmax(probabilities)])
+            print("P(target)   :", probabilities[target_tokenId])
+            print("Loss        :", loss)
+            print()
 
     # Final check
     result_final = pipeline.process_sentence("what is Japan?")
     print("\n=== AFTER TRAINING ===")
     print(f"Final prediction: '{result_final['predicted_token']}'")
-    print(f"Final probability for '{target_token}': {result_final['probabilities'][target_id]:.6f}")
+    print(f"Final probability for '{target_token}': {result_final['probabilities'][target_tokenId]:.6f}")
+
+    training_history["forward_pass_final"] = {
+        "predicted_token": result_final["predicted_token"],
+        "target_probability": float(result_final['probabilities'][target_tokenId])
+    }
+
+    # Save to file
+    results_dir = r"D:\Development\Projects\core\TransFi\results\lab_002_embeddings"
+    os.makedirs(results_dir, exist_ok=True)
+    results_path = os.path.join(results_dir, "training_results.json")
+    with open(results_path, 'w') as f:
+        json.dump(training_history, f, indent=4)
+    print(f"\nTraining results saved to: {results_path}")

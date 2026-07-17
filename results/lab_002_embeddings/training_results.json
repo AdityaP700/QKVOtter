@@ -1,0 +1,719 @@
+{
+    "forward_pass_initial": {
+        "predicted_token": "japan?",
+        "target_probability": 0.033583910740571175
+    },
+    "epochs": [
+        {
+            "step": 0,
+            "loss": 3.393708173703629,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.03461194602371184
+        },
+        {
+            "step": 10,
+            "loss": 3.102720191416032,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.046198850477064006
+        },
+        {
+            "step": 20,
+            "loss": 2.831645927704954,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.06047933283009912
+        },
+        {
+            "step": 30,
+            "loss": 2.576136569643024,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.07797891018146952
+        },
+        {
+            "step": 40,
+            "loss": 2.3332381292572566,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.09930436856685484
+        },
+        {
+            "step": 50,
+            "loss": 2.1012371830571985,
+            "target": "country",
+            "prediction": "japan?",
+            "p_target": 0.12510459527072015
+        },
+        {
+            "step": 60,
+            "loss": 1.8795649132842487,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.15598809601084093
+        },
+        {
+            "step": 70,
+            "loss": 1.6686880289745472,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.1923884516728006
+        },
+        {
+            "step": 80,
+            "loss": 1.4699194109322953,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.23438808434629263
+        },
+        {
+            "step": 90,
+            "loss": 1.2851018102987701,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.28154480618822036
+        },
+        {
+            "step": 100,
+            "loss": 1.1161698912043956,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.3327992868344608
+        },
+        {
+            "step": 110,
+            "loss": 0.9646711340906189,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.38654074875702676
+        },
+        {
+            "step": 120,
+            "loss": 0.831381438673731,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.4408477390347122
+        },
+        {
+            "step": 130,
+            "loss": 0.7161355419921104,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.493827006000515
+        },
+        {
+            "step": 140,
+            "loss": 0.6179026385361385,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.543918789318024
+        },
+        {
+            "step": 150,
+            "loss": 0.5350354130506296,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.59006680675699
+        },
+        {
+            "step": 160,
+            "loss": 0.46557419073870376,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.6317336836953596
+        },
+        {
+            "step": 170,
+            "loss": 0.4075096094278121,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.6688096470494491
+        },
+        {
+            "step": 180,
+            "loss": 0.35895999107640597,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.7014804555485744
+        },
+        {
+            "step": 190,
+            "loss": 0.3182639797782343,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.730102876083666
+        },
+        {
+            "step": 200,
+            "loss": 0.2840103198591983,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.7551096605788766
+        },
+        {
+            "step": 210,
+            "loss": 0.2550296603497669,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.7769469675833592
+        },
+        {
+            "step": 220,
+            "loss": 0.23036780374269705,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.7960382579657094
+        },
+        {
+            "step": 230,
+            "loss": 0.20925277394355474,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8127666302351597
+        },
+        {
+            "step": 240,
+            "loss": 0.1910624327915763,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8274686528852827
+        },
+        {
+            "step": 250,
+            "loss": 0.17529569514004492,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8404346923431659
+        },
+        {
+            "step": 260,
+            "loss": 0.16154830278248603,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8519125023090309
+        },
+        {
+            "step": 270,
+            "loss": 0.14949307097017275,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8621121432956538
+        },
+        {
+            "step": 280,
+            "loss": 0.13886407879876198,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8712111612446672
+        },
+        {
+            "step": 290,
+            "loss": 0.12944414889479408,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8793594820312952
+        },
+        {
+            "step": 300,
+            "loss": 0.12105498485540493,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8866837846341641
+        },
+        {
+            "step": 310,
+            "loss": 0.11354941677105476,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8932912833404665
+        },
+        {
+            "step": 320,
+            "loss": 0.10680530130242331,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.8992729348765827
+        },
+        {
+            "step": 330,
+            "loss": 0.10072071328331644,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9047061252137387
+        },
+        {
+            "step": 340,
+            "loss": 0.09521014336644851,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9096569042837512
+        },
+        {
+            "step": 350,
+            "loss": 0.09020147947893825,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9141818373045612
+        },
+        {
+            "step": 360,
+            "loss": 0.08563360001285845,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9183295358002551
+        },
+        {
+            "step": 370,
+            "loss": 0.08145444580015711,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.922141923467399
+        },
+        {
+            "step": 380,
+            "loss": 0.07761946814820295,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9256552837303207
+        },
+        {
+            "step": 390,
+            "loss": 0.0740903734469587,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9289011280680577
+        },
+        {
+            "step": 400,
+            "loss": 0.07083410268128892,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9319069173603163
+        },
+        {
+            "step": 410,
+            "loss": 0.0678219978520146,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9346966626787031
+        },
+        {
+            "step": 420,
+            "loss": 0.06502911780849721,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9372914270938318
+        },
+        {
+            "step": 430,
+            "loss": 0.062433674078259366,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9397097460710934
+        },
+        {
+            "step": 440,
+            "loss": 0.06001656352043899,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9419679807633045
+        },
+        {
+            "step": 450,
+            "loss": 0.057760979466188044,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9440806158559012
+        },
+        {
+            "step": 460,
+            "loss": 0.05565208677120447,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9460605114710834
+        },
+        {
+            "step": 470,
+            "loss": 0.05367674914391337,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9479191168979287
+        },
+        {
+            "step": 480,
+            "loss": 0.051823299417400825,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9496666525079547
+        },
+        {
+            "step": 490,
+            "loss": 0.05008134524844583,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.95131226507576
+        },
+        {
+            "step": 500,
+            "loss": 0.04844160416299367,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9528641608000252
+        },
+        {
+            "step": 510,
+            "loss": 0.04689576300815564,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9543297195692926
+        },
+        {
+            "step": 520,
+            "loss": 0.04543635778100739,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9557155934056124
+        },
+        {
+            "step": 530,
+            "loss": 0.0440566705335922,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9570277915203506
+        },
+        {
+            "step": 540,
+            "loss": 0.04275064064014635,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9582717540083358
+        },
+        {
+            "step": 550,
+            "loss": 0.04151278818635421,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9594524158718234
+        },
+        {
+            "step": 560,
+            "loss": 0.04033814762464551,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9605742627904235
+        },
+        {
+            "step": 570,
+            "loss": 0.0392222101523073,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9616413798260632
+        },
+        {
+            "step": 580,
+            "loss": 0.03816087352474774,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9626574940642525
+        },
+        {
+            "step": 590,
+            "loss": 0.03715039822581332,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9636260120371415
+        },
+        {
+            "step": 600,
+            "loss": 0.03618736908958623,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9645500526442828
+        },
+        {
+            "step": 610,
+            "loss": 0.03526866161052003,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9654324761789592
+        },
+        {
+            "step": 620,
+            "loss": 0.03439141229685162,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9662759099775423
+        },
+        {
+            "step": 630,
+            "loss": 0.03355299252037993,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9670827711335624
+        },
+        {
+            "step": 640,
+            "loss": 0.03275098539755114,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9678552866544177
+        },
+        {
+            "step": 650,
+            "loss": 0.03198316530531325,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9685955113849355
+        },
+        {
+            "step": 660,
+            "loss": 0.03124747969265741,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9693053439765572
+        },
+        {
+            "step": 670,
+            "loss": 0.030542032897156703,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.969986541142446
+        },
+        {
+            "step": 680,
+            "loss": 0.0298650717166395,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9706407304061082
+        },
+        {
+            "step": 690,
+            "loss": 0.029214972520692193,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9712694215232838
+        },
+        {
+            "step": 700,
+            "loss": 0.028590229716015457,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9718740167330837
+        },
+        {
+            "step": 710,
+            "loss": 0.027989445404613157,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9724558199740307
+        },
+        {
+            "step": 720,
+            "loss": 0.02741132009508207,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9730160451832109
+        },
+        {
+            "step": 730,
+            "loss": 0.02685464434546479,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9735558237817584
+        },
+        {
+            "step": 740,
+            "loss": 0.02631829123174435,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.974076211437006
+        },
+        {
+            "step": 750,
+            "loss": 0.02580120954945238,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9745781941804559
+        },
+        {
+            "step": 760,
+            "loss": 0.025302417667412345,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9750626939511401
+        },
+        {
+            "step": 770,
+            "loss": 0.024820997962607876,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9755305736255382
+        },
+        {
+            "step": 780,
+            "loss": 0.024356091773772726,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.975982641588011
+        },
+        {
+            "step": 790,
+            "loss": 0.0239068948187726,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9764196558893747
+        },
+        {
+            "step": 800,
+            "loss": 0.023472653027339665,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9768423280357466
+        },
+        {
+            "step": 810,
+            "loss": 0.02305265874635847,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9772513264450001
+        },
+        {
+            "step": 820,
+            "loss": 0.022646247279821608,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9776472796039546
+        },
+        {
+            "step": 830,
+            "loss": 0.02225279372988137,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9780307789557479
+        },
+        {
+            "step": 840,
+            "loss": 0.021871710109177205,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9784023815436108
+        },
+        {
+            "step": 850,
+            "loss": 0.02150244269791781,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9787626124344139
+        },
+        {
+            "step": 860,
+            "loss": 0.02114446962209745,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9791119669428627
+        },
+        {
+            "step": 870,
+            "loss": 0.020797298631771127,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9794509126749966
+        },
+        {
+            "step": 880,
+            "loss": 0.020460465060556796,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9797798914077094
+        },
+        {
+            "step": 890,
+            "loss": 0.02013352994951874,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9800993208192723
+        },
+        {
+            "step": 900,
+            "loss": 0.019816078320334288,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.980409596084318
+        },
+        {
+            "step": 910,
+            "loss": 0.019507717584202035,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9807110913453734
+        },
+        {
+            "step": 920,
+            "loss": 0.01920807607431385,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9810041610718442
+        },
+        {
+            "step": 930,
+            "loss": 0.018916801690953344,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9812891413162513
+        },
+        {
+            "step": 940,
+            "loss": 0.01863356064934638,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9815663508765902
+        },
+        {
+            "step": 950,
+            "loss": 0.01835803632137631,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9818360923728043
+        },
+        {
+            "step": 960,
+            "loss": 0.01808992816313106,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9820986532446229
+        },
+        {
+            "step": 970,
+            "loss": 0.017828950721012583,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9823543066773105
+        },
+        {
+            "step": 980,
+            "loss": 0.017574832709839273,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9826033124612781
+        },
+        {
+            "step": 990,
+            "loss": 0.017327316156988473,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.9828459177909479
+        },
+        {
+            "step": 1000,
+            "loss": 0.017086155607160678,
+            "target": "country",
+            "prediction": "country",
+            "p_target": 0.983082358007778
+        }
+    ],
+    "forward_pass_final": {
+        "predicted_token": "country",
+        "target_probability": 0.983082358007778
+    }
+}
