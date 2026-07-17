@@ -191,3 +191,28 @@ softmax(QK`/sqrt(d_k))V :
 - Sparse Categorical Cross-Entropy,When to use: Mathematically identical to CCE, but computationally optimized.Requirement: Instead of converting labels to bulky one-hot encoded arrays, you leave your labels as integers (0, 1, 2). This saves a massive amount of RAM when you have thousands of classes (like predicting the next word in a dictionary for LLMs).
 
 - Relative Entropy (Kullback-Leibler / KL Divergence),When to use: Used in Generative AI (like VAEs or Diffusion models) to measure how much information is lost when approximating one continuous distribution with another.
+
+
+# here the results for the input
+"What is Japan?"
+
+- the cross entropy calculated to be 3.3% ,that is its confident that the answer is correct i.e. "country"
+
+hence the loss is 3.39
+# True Target Word: 'country' (Token ID: 24)
+<!-- Model's Assigned Probability to 'country': 0.033584
+Calculated Cross-Entropy Loss: 3.393708 -->
+
+- Cross Entropy measures how surprised the model is by the correct answer.
+
+1) Backpropagation
+Loss
+↓
+Gradient wrt Logits
+↓
+Gradient wrt W
+↓
+Gradient wrt Average Embedding
+↓
+Gradient wrt Embedding Matrix
+
