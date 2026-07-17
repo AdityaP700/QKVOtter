@@ -150,7 +150,7 @@ class LinearLayer:
         # the value was (4*1) @(4*20) ->(20,1)
         # W shape: (4, 20)
         # (4,) @ (4, 20) -> (20,)
-        
+
         logits = np.dot(x, self.W)
         return logits
 
@@ -237,7 +237,13 @@ class LossFunction:
         Returns:
             Cross-entropy loss value
         """
-        # predicted probabilities
+        # predicted probabilities q_pred before
+        # now the case is we are cliping the probabilities
+        # lets suppose if the q_pred is lesser than epsilion then it will take
+        # the value of epsilion else
+        # if its quite larger then it will take the value of 1
+        #if its between epsillion and 1 then it will stay as it is
+
         q_pred_clipped = np.clip(q_pred, self.epsilon, 1.0)
         cross_entropy_loss = -np.sum(p_true * np.log(q_pred_clipped))
         return cross_entropy_loss
@@ -262,6 +268,33 @@ class TokenPredictor:
         predicted_token = vocabulary.get_word(predicted_token_id)
         return predicted_token_id, predicted_token
 
+class Trainer:
+    def __init__(self,pipeline,optimizer):
+        self.pipeline=pipeline
+        self.optimizer=optimizer
+        self.vocab_size=pipeline.vocabulary.vocab_size
+
+    #first step to backpropagate from loss to logits
+    def compute_gradient_wrt_logits(self,probabilities ,target_token_id):
+        #initialize for the target_token
+        one_hot_target=np.zeros(self.vocab_size)
+        one_hot_target[target_token_id]=1.0
+        #calculate the gradient for the logits (p-y)
+        dl_dlogits = probabilities-one_hot_target
+
+        return dl_dlogits
+
+    #orchestration layer
+    def backpropagate(self,stored_forward_state,target_token):
+        target_token_id=self.pipeline.vocabulary.get_token_id(target_token.lower())
+        probabilities = stored_forward_state['probabilities']
+        vocab_size=self.pipeline.vocabulary.vocab_size
+
+        dl_dlogits=self.compute_gradient_wrt_logits(
+            probabilities,
+            target_token_id,
+            vocab_size
+        )
 
 class EmbeddingPipeline:
     """Main pipeline orchestrating the entire embedding to prediction flow."""

@@ -300,3 +300,13 @@ Vocabulary logits
 ✅ Why GPT predicts one score per vocabulary token
 ✅ Why Cross Entropy is used
 ✅ How gradients eventually flow back into the embedding matrix
+
+# i am implementing a class and method based architecture to incorporate the simplicity
+
+<!--
+Core Attributes to Store
+1) pipeline - Your forward pass pipeline
+2) optimizer - The optimizer instance
+3) loss_function - Loss computation class
+4) training_history - List to track losses
+-->

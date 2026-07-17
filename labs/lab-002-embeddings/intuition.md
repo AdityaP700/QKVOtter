@@ -129,7 +129,7 @@ how do logits appear ?/
 high score = most probable logit
 
 # "Logits are the raw scores (unnormalized evidence) for every possible output token.
-- "Among all the words I know, AI currently has the strongest evidence of being the next token."
+- "Among all the words I know, "AI" currently has the strongest evidence of being the next token."
 
 # "How compatible is my sentence representation with every word in the vocabulary?"
 - The token with the highest logit is the model's current prediction, while Softmax converts these scores into probabilities for training and sampling.
