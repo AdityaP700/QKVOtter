@@ -385,11 +385,21 @@ class Trainer:
 
     # Backward pass
         gradients = self.backpropagate(forward_results, target_token)
+        self.latest_gradients = gradients
 
     # Update parameters
         self.optimizer.update(self.pipeline, gradients)
 
         return loss, forward_results['predicted_token']
+    
+    def print_gradient_norms(self, step):
+        if not hasattr(self, 'latest_gradients') or self.latest_gradients is None:
+            return
+        w_norm = np.linalg.norm(self.latest_gradients['W'])
+        e_norm = np.linalg.norm(self.latest_gradients['embeddings'])
+        print(f"Epoch {step}")
+        print(f"||dW|| = {w_norm:.4f}")
+        print(f"||dEmbedding|| = {e_norm:.4f}\n")
 
 class EmbeddingPipeline:
     """Main pipeline orchestrating the entire embedding to prediction flow."""
@@ -647,7 +657,7 @@ if __name__ == "__main__":
             print("Prediction  :", vocab[np.argmax(probabilities)])
             print("P(target)   :", probabilities[target_tokenId])
             print("Loss        :", loss)
-            print()
+            trainer.print_gradient_norms(step)
 
     # Final check
     result_final = pipeline.process_sentence("what is Japan?")
