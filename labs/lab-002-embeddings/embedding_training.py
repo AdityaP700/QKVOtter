@@ -319,7 +319,26 @@ class Trainer:
          dl_dindividual = dl_davg_embedding / num_tokens
          return dl_dindividual
 
-    
+    def compute_gradient_wrt_embedding_matrix(self, dl_dindividual, token_ids):
+        """
+    Map individual token gradients to the embedding matrix.
+    Only rows corresponding to input tokens get gradients.
+
+    Args:
+        dl_dindividual: Gradient for each token, shape (embedding_dim,)
+        token_ids: List of token IDs from the input
+
+    Returns:
+        dl_dE: Sparse gradient matrix, shape (vocab_size, embedding_dim)
+              All rows are zero except for input token rows
+    """
+        dl_dE = np.zeros((self.vocab_size, dl_dindividual.shape[0]))
+        for token_id in token_ids:
+            dl_dE[token_id]+=dl_dindividual
+
+        return dl_dE
+
+
     #orchestration layer
     def backpropagate(self,stored_forward_state,target_token):
         probabilities = stored_forward_state['probabilities']
@@ -337,15 +356,38 @@ class Trainer:
         dl_davg_embedding = self.compute_gradient_wrt_average_embedding(dl_dlogits, W)
 
         # Step 3: Continue downward to embeddings
-        dl_dembeddings = self.compute_gradient_wrt_embeddings(dl_davg_embedding, num_tokens)
-        dl_dindividuals=self.compute_gradient_wrt_embeddings(dl_dembeddings,num_tokens)
+        dl_dindividual=self.compute_gradient_wrt_embeddings(dl_davg_embedding,num_tokens)
+
+        # Step 4: Individual → Embedding Matrix (SPARSE ASSIGNMENT)
+        dl_dE=self.compute_gradient_wrt_embedding_matrix(dl_dindividual, token_ids)
         gradients = {
         'W': dl_dW,
-        'embeddings': dl_dindividuals,
-        'token_ids': token_ids  # Need these to know which rows to update
+        'embeddings': dl_dE,
     }
 
         return gradients
+
+    def train_step(self, input_tokens, target_token):
+        # Forward pass
+        sentence = ' '.join(input_tokens)
+        forward_results = self.pipeline.process_sentence(sentence)
+
+    # Add num_tokens to stored state (the one thing pipeline doesn't store yet)
+        forward_results['num_tokens'] = len(input_tokens)
+
+    # Compute loss - USE YOUR EXISTING METHOD!
+        target_token_id, loss = self.pipeline.compute_loss(
+        forward_results['probabilities'],
+        target_token
+    )
+
+    # Backward pass
+        gradients = self.backpropagate(forward_results, target_token)
+
+    # Update parameters
+        self.optimizer.update(self.pipeline, gradients)
+
+        return loss, forward_results['predicted_token']
 
 class EmbeddingPipeline:
     """Main pipeline orchestrating the entire embedding to prediction flow."""
@@ -407,7 +449,8 @@ class EmbeddingPipeline:
             'logits': logits,
             'probabilities': probabilities,
             'predicted_token_id': predicted_token_id,
-            'predicted_token': predicted_token
+            'predicted_token': predicted_token,
+            'num_tokens': len(words)
         }
 
     def compute_loss(self, probabilities, true_target):
@@ -434,6 +477,17 @@ class EmbeddingPipeline:
         loss = self.loss_function.cross_entropy_loss(p_true, probabilities)
 
         return target_token_id, loss
+
+class SGDOptimizer:
+    def __init__(self, learning_rate=0.01):
+        self.learning_rate = learning_rate
+
+    def update(self, pipeline, gradients):
+        # Update linear weights
+        pipeline.linear_layer.W -= self.learning_rate * gradients['W']
+
+        # Update embedding matrix
+        pipeline.embedding_layer.embedding_matrix -= self.learning_rate * gradients['embeddings']
 
 
 class TrainingDataLoader:
@@ -538,3 +592,36 @@ if __name__ == "__main__":
     print(f"Model's Assigned Probability to '{true_target}': "
           f"{results['probabilities'][target_token_id]:.6f}")
     print(f"Calculated Cross-Entropy Loss: {loss:.6f}")
+
+    # ============================================================================
+    # TRAINING DEMONSTRATION
+    # ============================================================================
+
+    # Re-initialize for a clean training run
+    pipeline = EmbeddingPipeline(vocab, embedding_dim=4)
+    optimizer = SGDOptimizer(learning_rate=0.01)
+    trainer = Trainer(pipeline, optimizer)
+
+    # Test on a single example
+    input_tokens = ["what", "is"]
+    target_token = "japan?"
+    target_id = pipeline.vocabulary.get_token_id(target_token)
+
+    print("\n=== BEFORE TRAINING ===")
+    result_before = pipeline.process_sentence("what is Japan?")
+    print(f"Predicted: '{result_before['predicted_token']}'")
+    print(f"Probabilities for '{target_token}': {result_before['probabilities'][target_id]:.6f}")
+
+    print("\n=== TRAINING 100 STEPS ===")
+    for step in range(100):
+        loss, predicted = trainer.train_step(input_tokens, target_token)
+        if step % 20 == 0:
+            result = pipeline.process_sentence("what is Japan?")
+            prob = result['probabilities'][target_id]
+            print(f"Step {step:2d}: Loss={loss:.4f}, P({target_token})={prob:.4f}, Predicted='{predicted}'")
+
+    # Final check
+    result_final = pipeline.process_sentence("what is Japan?")
+    print("\n=== AFTER TRAINING ===")
+    print(f"Final prediction: '{result_final['predicted_token']}'")
+    print(f"Final probability for '{target_token}': {result_final['probabilities'][target_id]:.6f}")
