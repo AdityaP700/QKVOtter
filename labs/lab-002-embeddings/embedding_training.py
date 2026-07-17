@@ -284,17 +284,68 @@ class Trainer:
 
         return dl_dlogits
 
+    #logits->weights yayyyy lesgoo
+    def compute_gradient_wrt_weights(self, dl_dlogits, average_embedding):
+        """
+    Compute gradient of loss with respect to linear weights W.
+    Forward: logits = avg_embedding @ W
+    Backward: dL/dW = avg_embedding^T ⊗ dL/dlogits
+    """
+        dl_dw=np.outer(average_embedding,dl_dlogits)
+        return dl_dw
+
+    def compute_gradient_wrt_average_embedding(self, dl_dlogits, W):
+        """
+        Compute gradient of loss with respect to average embedding.
+    Forward: logits = avg_embedding @ W
+    Backward: dL/davg_embedding = dL/dlogits @ W^T
+        """
+        dl_davg_embedding = W @ dl_dlogits
+        return dl_davg_embedding
+
+    def compute_gradient_wrt_embeddings(self, dl_davg_embedding, num_tokens):
+         """
+    Distribute the average embedding gradient to each individual token.
+    Forward: avg = (e_1 + e_2 + ... + e_n) / n
+    Backward: dL/de_i = (1/n) * dL/davg
+
+    Args:
+        dl_davg_embedding: Gradient from average embedding, shape (embedding_dim,)
+        num_tokens: Number of tokens in the input sequence
+
+    Returns:
+        dl_dindividual: Gradient for each token's embedding, shape (embedding_dim,)
+    """
+         dl_dindividual = dl_davg_embedding / num_tokens
+         return dl_dindividual
+
+    
     #orchestration layer
     def backpropagate(self,stored_forward_state,target_token):
-        target_token_id=self.pipeline.vocabulary.get_token_id(target_token.lower())
         probabilities = stored_forward_state['probabilities']
-        vocab_size=self.pipeline.vocabulary.vocab_size
+        average_embedding = stored_forward_state['average_embedding']
+        token_ids = stored_forward_state['token_ids']
+        num_tokens = stored_forward_state['num_tokens']
+        W = self.pipeline.linear_layer.W
 
-        dl_dlogits=self.compute_gradient_wrt_logits(
-            probabilities,
-            target_token_id,
-            vocab_size
-        )
+        # Step 1: Loss → Logits
+        target_token_id = self.pipeline.vocabulary.get_token_id(target_token.lower())
+        dl_dlogits = self.compute_gradient_wrt_logits(probabilities, target_token_id)
+
+        # Step 2: FORK - Compute both paths
+        dl_dW = self.compute_gradient_wrt_weights(dl_dlogits, average_embedding)
+        dl_davg_embedding = self.compute_gradient_wrt_average_embedding(dl_dlogits, W)
+
+        # Step 3: Continue downward to embeddings
+        dl_dembeddings = self.compute_gradient_wrt_embeddings(dl_davg_embedding, num_tokens)
+        dl_dindividuals=self.compute_gradient_wrt_embeddings(dl_dembeddings,num_tokens)
+        gradients = {
+        'W': dl_dW,
+        'embeddings': dl_dindividuals,
+        'token_ids': token_ids  # Need these to know which rows to update
+    }
+
+        return gradients
 
 class EmbeddingPipeline:
     """Main pipeline orchestrating the entire embedding to prediction flow."""
