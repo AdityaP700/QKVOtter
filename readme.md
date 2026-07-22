@@ -58,4 +58,16 @@ The embedding layer performs no computation beyond a lookup. Each token ID acts 
   - **Results ("I love dogs")**: [experiment_001.json](./results/lab_002_embeddings/experiment_001.json)
   - **Results ("I love AI")**: [experiment_002.json](./results/lab_002_embeddings/experiment_001_b.json)
 
+- **Experiment 2: Embedding Training (Observations)**
+  *How do embeddings become meaningful? I built a complete training pipeline from scratch to observe how gradients flow back to update the embedding matrix over 1000 epochs, analyzing logits, stable softmax, and cross-entropy along the way.*
+  - **Learnings**: [embedding_training_finding.md](./learnings/lab_002_embeddings/embedding_training_finding.md)
+  - **Results**: [training_results.json](./results/lab_002_embeddings/training_results.json)
+
+### Key Observation from Lab 002
+
+> **Embeddings are not magical vectors. They become meaningful because gradients from the prediction loss flow backward through the network and continuously update the embedding matrix.**
+
+so now the next question is that
+"How does one token might correlate with other tokens? / as in discussing about self attention"
+
 *More labs coming as I slowly rebuild the transformer architecture block by block...*
