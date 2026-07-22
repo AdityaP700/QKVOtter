@@ -391,7 +391,7 @@ class Trainer:
         self.optimizer.update(self.pipeline, gradients)
 
         return loss, forward_results['predicted_token']
-    
+
     def print_gradient_norms(self, step):
         if not hasattr(self, 'latest_gradients') or self.latest_gradients is None:
             return
