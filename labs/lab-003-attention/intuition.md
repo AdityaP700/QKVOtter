@@ -97,3 +97,54 @@ It was faster to train than an LSTM and used less GPU memory, but it still suffe
 
 
 ## Long-context degradation is real, but it involves several issues: positional behavior, learned attention patterns, finite model capacity, attention sinks, training-length generalization, retrieval behavior, etc. Don't reduce it simply to 1/N dilution.
+
+embedding
+   ↓
+Q K V
+   ↓
+similarity
+   ↓
+scaling
+   ↓
+causal masking
+   ↓
+softmax
+   ↓
+weighted V
+   ↓
+contextual representation
+
+Why does a Transformer need multiple attention heads if one attention mechanism already lets every token inspect its history?
+
+- However, a single attention head has a massive mathematical limitation: It can only calculate one type of relationship at a time.
+
+- If you force a model to use only one attention head, it suffers from what is called an averaging problem
+
+- Multiple attention heads allow the model to build a multi-dimensional, layered understanding of language simultaneously.
+
+- A single attention mechanism calculates attention weights by computing the dot product between a Query (\(Q\)) matrix and a Key (\(K\)) matrix
+
+- Because this is a linear transformation, a single head can only project the tokens into one specific mathematical perspective per layer.
+
+- a token might need different kinds of information simulateously
+such as
+syntactic relationship
+semantic relationship
+subject/object relationship
+position-related information
+...
+
+## The Practical ExampleConsider this sentence:
+"The automated agent quickly executed the server backup script because it noticed a memory leak.
+
+"If we look at the word "it", what does it refer to?
+
+- Syntax/Grammar: "it" is a pronoun that links back to the noun "agent".
+
+- Causality/Logic: "it" did something because of the "memory leak".
+
+- Action: "it" performed the action "executed".
+
+Multi-Head Attention is a team of forensic experts inspecting the same room simultaneously:Detective 1 looks only for fingerprints.Detective 2 looks only for DNA samples.Detective 3 analyzes the structural geometry of the entry point.
+
+Q_base is how the hardware wants to calculate the data (all at once, as fast as possible).Q_split is how the Transformer logic needs to look at the data (divided into individual detectives).
