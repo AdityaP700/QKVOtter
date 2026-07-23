@@ -1,8 +1,10 @@
 import numpy as np
 import json
 import os
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
-vocab_size = 5
+vocab_size = 10
 embedding_dim = 4
 np.random.seed(42) # for reproducibility
 embedding_matrix = np.random.randn(vocab_size, embedding_dim)
@@ -12,10 +14,15 @@ vocab = {
     "love": 1,
     "AI": 2,
     "cats": 3,
-    "dogs": 4
+    "dogs": 4,
+    "dog":5,
+    "chased":6,
+    "the":7,
+    "The":8,
+    "cat":9
 }
 
-sentence = "I love dogs"
+sentence = "The dog chased the cat"
 words = sentence.split()
 token_ids = [vocab[word] for word in words]
 embeddings = embedding_matrix[token_ids] # shape [3, 4]
@@ -80,4 +87,29 @@ for r in results["attention_results"]:
     print("Context Vector: ", np.round(r["context_vector"], 4))
     print()
 
+def print_attention_heatmap(words, attention_matrix):
+    print("\n=== Attention Heatmap ===")
+    header = f"{'':<10}"
+    for word in words:
+        header += f"{word:<8}"
+    print(header)
+    print()
+
+    for i, row_word in enumerate(words):
+        row_str = f"{row_word:<10}"
+        for j, col_word in enumerate(words):
+            weight = attention_matrix[i][j]
+            if weight >= 0.70:
+                block = "███"
+            elif weight >= 0.20:
+                block = "▓"
+            elif weight >= 0.01:
+                block = "░"
+            else:
+                block = "   "
+            row_str += f"{block:<8}"
+        print(row_str)
+        print()
+
+print_attention_heatmap(words, attention_weights_matrix)
 print(f"Results saved to {os.path.relpath(output_file)}")

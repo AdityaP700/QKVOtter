@@ -40,4 +40,30 @@ Self-attention says
 
 Instead of me choosing these scores, how can the model compute them by itself?
 
+Attention is just three learned projections + similarity + weighted aggregation.
 
+arlier:
+
+embedding
+    |
+    W
+    |
+logits
+
+Now:
+
+embedding
+    |
+    Wq
+    |
+query vector
+embedding
+    |
+    Wk
+    |
+key vector
+embedding
+    |
+    Wv
+    |
+value vector
