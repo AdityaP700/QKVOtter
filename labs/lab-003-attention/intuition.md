@@ -39,3 +39,5 @@ Self-attention says
 - "dogs" broadcasts: "I am a plural noun/object."
 
 Instead of me choosing these scores, how can the model compute them by itself?
+
+
